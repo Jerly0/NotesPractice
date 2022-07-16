@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+    <meta charset = "UTF-8">
+    <title>TITLE</title>
+    <script src = "scripts/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color : #d4e9ff">
+
+<div2 class="dropdown" style="">
+    <button id="remove" onclick="myFunction()" class="dropbtn">Delete form</button>
+    <div id="myDropdown" class="dropdown-content">
+    </div>
+</div2>
+
+<div class="form" style="">
+    <button id="add" class="add">Add form</button>
+</div>
+
+
+
+</body>
+
+<script>
+var arrayOfNotes = [];
+let taid;
+
+var $add = document.getElementsByClassName('add')[0];
+var $form = document.getElementsByClassName('form')[0];
+
+var likeid = "ta";
+
+function getId(event, taid){
+  if(taid == arrayOfNotes.length){
+    taid -= 1;
+  } else if (taid > arrayOfNotes.length) {
+    taid = arrayOfNotes.length-1;
+  }
+  event.preventDefault();
+
+  document.getElementById("ta" + taid).remove();
+
+  document.getElementById(taid).remove();
+
+  arrayOfNotes.splice(taid, 1);
+
+  arrayOfNotes.forEach(function(item, index, array) {
+    if(index >= taid){
+      document.getElementById("ta" + array[index]).id = "ta" + index;
+      document.getElementById(array[index]).id = index + "";
+      array[index] = index + "";
+            changeBack("ta" + index);
+        }
+
+    });
+}
+
+function changeBack(numOfTA){
+    text = document.getElementById(numOfTA).value;
+    let index = numOfTA.replace('ta', '');
+    var name = document.getElementById(index);
+    text = text.substring(0, 10);
+    if(text == "") {
+        name.innerHTML = "Note " + (parseInt(index)+1);
+    } else {
+    name.innerHTML = text;
+    }
+}
+
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+$add.addEventListener('click', function(event) {
+  var k = likeid + arrayOfNotes.length;
+
+  $("#myDropdown").append("<a href=\"\" id=" + arrayOfNotes.length + " class=\"removingta\" onClick=\"getId(event," + arrayOfNotes.length + ")\">Note " + (arrayOfNotes.length+1) + "</a>");
+  arrayOfNotes.push(document.getElementById(arrayOfNotes.length).id);
+  var $textarea = document.createElement('textarea');
+  $textarea.placeholder = 'Enter your text';
+  $textarea.id = k;
+  $textarea.addEventListener("change", () => {
+    changeBack($textarea.id)
+  });
+
+  $form.insertBefore($textarea, $add);
+});
+
+
+
+</script>
+
+
+</html>

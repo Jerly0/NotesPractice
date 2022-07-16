@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="1" author="rufina">
+        <comment>Create user person</comment>
+        <sql>
+            create table person
+            (
+                id            bigint auto_increment,
+                name    varchar(50) not null ,
+                text     varchar(50) ,
+                constraint pk_person primary key (id)
+            );
+        </sql>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>
